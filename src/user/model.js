@@ -5,13 +5,38 @@ const userSchema = new Schema(
     {
       first_name:  String,
       last_name: String,
-      age: Number,
+      age: {
+        value: Number
+      },
       date: {
         type: Date,
         default: Date.now
+      },
+      updatedAt: {
+        type: Date,
+        default: null
       }
 });
 
-const Model = mongoose.model('User', userSchema);
+const storySchema = new Schema(
+  {
+    author:
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+    title: String
+  }
+);
 
-module.exports = Model;
+userSchema.pre('update', function() {
+  this.set({ updatedAt: Date.now() });
+});
+
+const UserModel = mongoose.model('User', userSchema);
+const StoryModel = mongoose.model('Story', storySchema);
+
+module.exports = {
+  UserModel,
+  StoryModel
+};
