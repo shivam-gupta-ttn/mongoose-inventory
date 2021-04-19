@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser')
 
-const routes = require('./user/routes');
+const routes = require('./item/routes');
 
 const app = express();
 const port = 3000;
@@ -10,7 +10,7 @@ const port = 3000;
 app.use(bodyParser.json())
 app.use(routes);
 
-mongoose.connect("mongodb://localhost:27017/testdb", {
+mongoose.connect("mongodb://localhost:27017/inventory", {
   useNewUrlParser: "true",
 });
 
